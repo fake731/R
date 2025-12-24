@@ -8,205 +8,130 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --main: #007aff; --bg: #f2f2f7; --white: #ffffff; --green: #34c759; }
-        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; color: #1c1c1e; overflow-x: hidden; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; color: #1c1c1e; }
         
-        /* عداد المستخدمين العالمي */
         .global-stats {
             position: fixed; top: 15px; left: 15px; z-index: 1000;
             background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 50px;
             backdrop-filter: blur(10px); border: 1px solid var(--main);
             font-weight: 800; color: var(--main); font-size: 0.85rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* شاشة الدخول الاحترافية */
         #login-screen {
             position: fixed; inset: 0; background: var(--white); z-index: 2000;
-            display: flex; justify-content: center; align-items: center; transition: 0.5s;
+            display: flex; justify-content: center; align-items: center; text-align: center;
         }
 
-        .auth-container { width: 90%; max-width: 400px; text-align: center; }
-        .logo-text { color: var(--main); font-weight: 900; letter-spacing: 3px; font-size: 0.9rem; margin-bottom: 10px; }
-
-        .input-hero { 
-            width: 100%; padding: 18px; border-radius: 15px; border: 2px solid #eee; 
-            font-size: 1.1rem; text-align: center; outline: none; margin-bottom: 20px;
-            transition: 0.3s;
-        }
-        .input-hero:focus { border-color: var(--main); }
-
-        .btn-hero { 
-            width: 100%; padding: 18px; border-radius: 15px; border: none; 
-            background: var(--main); color: white; font-weight: 900; 
-            cursor: pointer; font-size: 1.1rem; transition: 0.3s;
-        }
-        .btn-hero:active { transform: scale(0.95); }
-
-        /* المنصة الرئيسية */
-        .container { max-width: 550px; margin: 0 auto; padding: 20px; display: none; animation: fadeIn 0.8s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .card { 
-            background: var(--white); border-radius: 25px; padding: 30px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid rgba(0,0,0,0.02);
-        }
-
-        .points-display { font-size: 4.5rem; font-weight: 900; color: var(--main); text-align: center; line-height: 1; margin: 20px 0; }
+        .container { max-width: 500px; margin: 0 auto; padding: 20px; display: none; }
+        .card { background: var(--white); border-radius: 25px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 25px; }
         
-        /* لوحة الشرف */
-        .leaderboard-title { font-weight: 900; font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .user-item { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 0; border-bottom: 1px solid #f2f2f7; 
-        }
-        .user-item:last-child { border: none; }
-        .rank-badge { background: #f2f2f7; padding: 4px 12px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; }
-
-        .scan-loader { height: 6px; background: var(--green); width: 0%; border-radius: 10px; transition: width 1.5s ease-in-out; }
-
-        footer { text-align: center; padding: 50px 20px; color: #8e8e93; font-size: 0.85rem; }
+        .input-hero { width: 100%; padding: 18px; border-radius: 15px; border: 2px solid #eee; font-size: 1.1rem; text-align: center; outline: none; margin-bottom: 20px; }
+        .btn-hero { width: 100%; padding: 18px; border-radius: 15px; border: none; background: var(--main); color: white; font-weight: 900; cursor: pointer; font-size: 1.1rem; }
+        
+        .points-display { font-size: 4.5rem; font-weight: 900; color: var(--main); text-align: center; margin: 20px 0; }
+        .user-item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f2f2f7; }
+        .p-bar { height: 6px; background: var(--green); width: 0%; border-radius: 10px; transition: 1.5s; }
+        
+        footer { text-align: center; padding: 40px; color: #8e8e93; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-    <div class="global-stats">🌍 المسجلين بالنظام: <span id="globalCount">0</span></div>
+    <div class="global-stats">🌍 المسجلين: <span id="globalCount">0</span></div>
 
     <div id="login-screen">
-        <div class="auth-container">
-            <div class="logo-text">PRODUCED BY RAAD Y. HUDAIB</div>
-            <h1 style="font-size: 2.2rem; margin-bottom: 30px;">نظام الفرز السحابي</h1>
-            <input type="text" id="heroName" class="input-hero" placeholder="ادخل اسمك الكامل">
-            <button class="btn-hero" id="loginBtn" onclick="joinPlatform()">دخول للمنصة</button>
+        <div style="width: 90%; max-width: 400px;">
+            <div style="color: var(--main); font-weight: 900; letter-spacing: 3px; margin-bottom: 10px;">RAAD Y. HUDAIB</div>
+            <h1 style="margin-bottom: 30px;">نظام الفرز السحابي</h1>
+            <input type="text" id="heroName" class="input-hero" placeholder="اكتب اسمك الكامل">
+            <button class="btn-hero" id="loginBtn" onclick="join()">دخول للمنصة</button>
         </div>
     </div>
 
     <div class="container" id="app">
-        <div style="margin: 40px 0 30px; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <small style="color: #8e8e93;">البطل الحالي</small>
-                <h2 id="userNameDisplay" style="margin:0; font-weight: 900;">---</h2>
-            </div>
-            <button onclick="logout()" style="color: #ff3b30; border: none; background: none; font-weight: bold; cursor: pointer;">تسجيل خروج</button>
+        <div style="margin: 40px 0 20px; display: flex; justify-content: space-between; align-items: center;">
+            <h2 id="uDisplay" style="margin:0; font-weight: 900;">---</h2>
+            <button onclick="logout()" style="color:red; border:none; background:none; cursor:pointer; font-weight:bold;">خروج</button>
         </div>
 
         <div class="card" style="text-align: center;">
-            <p style="margin:0; font-weight: bold; color: #8e8e93;">رصيد نقاطك العالمي</p>
-            <div class="points-display" id="userPts">0</div>
-            <div class="scan-loader" id="pBar"></div>
-            <button class="btn-hero" style="background: var(--green); margin-top: 25px;" id="scanBtn" onclick="scanAndEarn()">
-                📸 تصوير وفحص النفايات (+25 نقطة)
-            </button>
+            <p style="color:#8e8e93;">نقاطك بالسيرفر العالمي</p>
+            <div class="points-display" id="uPts">0</div>
+            <div class="p-bar" id="pBar"></div>
+            <button class="btn-hero" style="background:var(--green); margin-top:20px;" id="scanBtn" onclick="earn()">📸 تصوير الفرز (+25 نقطة)</button>
         </div>
 
         <div class="card">
-            <div class="leaderboard-title">🏆 لوحة أبطال البيئة</div>
-            <div id="leaderboardList">
-                <p style="text-align: center; color: #8e8e93;">جاري مزامنة البيانات السحابية...</p>
-            </div>
+            <h3 style="margin-top:0;">🏆 لوحة الشرف العالمية</h3>
+            <div id="list">جاري مزامنة السحابة...</div>
         </div>
 
-        <footer>
-            جميع الحقوق محفوظة للمطور <br>
-            <strong>رعد يوسف هديب © 2024</strong>
-        </footer>
+        <footer>رعد يوسف هديب © 2024</footer>
     </div>
 
     <script>
-        // --- إعدادات الربط العالمية ---
-        // رعد: انسخ الـ Project URL من صفحة API في سوبابيس وحطه هون
-        const SB_URL = 'https://ضع_رابط_مشروعك_هنا_من_سوبابيس.supabase.co'; 
-        const SB_KEY = 'sb_publishable_zCz_Jcvslo-T-GIeye6ZfQ_2G8yXh2V'; // الـ API الخاص بك جاهز
-        // ---------------------------
+        // --- بيانات رعد يوسف هديب ---
+        const URL = 'https://fake731.supabase.co';
+        const KEY = 'sb_publishable_zCz_Jcvslo-T-GIeye6ZfQ_2G8yXh2V';
+        const _db = supabase.createClient(URL, KEY);
 
-        const _supabase = supabase.createClient(SB_URL, SB_KEY);
         let myName = localStorage.getItem('r_name') || "";
 
-        // دخول المنصة والمزامنة
-        async function joinPlatform() {
-            const nameInput = document.getElementById('heroName').value.trim();
-            if (nameInput.length < 3) return alert("الاسم قصير جداً!");
+        async function join() {
+            const n = document.getElementById('heroName').value.trim();
+            if(n.length < 3) return alert("الاسم قصير!");
             
-            const btn = document.getElementById('loginBtn');
-            btn.innerText = "جاري الاتصال بالسيرفر...";
-            btn.disabled = true;
-
-            // التحقق من وجود الاسم أو إضافته
-            const { data: existing } = await _supabase.from('users').select('*').eq('name', nameInput);
+            document.getElementById('loginBtn').innerText = "جاري المزامنة...";
             
-            if (existing && existing.length > 0) {
-                saveAndStart(nameInput);
-            } else {
-                const { error } = await _supabase.from('users').insert([{ name: nameInput, points: 0 }]);
-                if (!error) saveAndStart(nameInput);
-                else alert("حدث خطأ في الشبكة، حاول ثانية");
-            }
+            // تسجيل بالسيرفر
+            const { error } = await _db.from('users').insert([{ name: n, points: 0 }]);
+            
+            localStorage.setItem('r_name', n);
+            myName = n;
+            start();
         }
 
-        function saveAndStart(name) {
-            localStorage.setItem('r_name', name);
-            myName = name;
-            startApp();
+        function start() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+            document.getElementById('uDisplay').innerText = myName;
+            sync();
+            setInterval(sync, 5000); // تحديث كل 5 ثواني
         }
 
-        function startApp() {
-            document.getElementById('login-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('app').style.display = 'block';
-                document.getElementById('userNameDisplay').innerText = myName;
-                syncData();
-                setInterval(syncData, 5000); // تحديث تلقائي كل 5 ثواني لرؤية المنافسين
-            }, 500);
-        }
-
-        // جلب البيانات الحية من السيرفر
-        async function syncData() {
-            const { data: users, error } = await _supabase.from('users').select('*').order('points', { ascending: false });
-            
-            if (users) {
-                document.getElementById('globalCount').innerText = users.length;
-                const list = document.getElementById('leaderboardList');
-                list.innerHTML = users.map((u, index) => `
+        async function sync() {
+            const { data } = await _db.from('users').select('*').order('points', { ascending: false });
+            if(data) {
+                document.getElementById('globalCount').innerText = data.length;
+                document.getElementById('list').innerHTML = data.map(u => `
                     <div class="user-item">
-                        <span><span class="rank-badge">${index + 1}</span> <strong>${u.name}</strong></span>
-                        <span style="font-weight: 900; color: var(--main);">${u.points} <small>نقطة</small></span>
+                        <span><strong>${u.name}</strong></span>
+                        <span style="font-weight:900; color:var(--main)">${u.points}</span>
                     </div>
                 `).join('');
-
-                const myData = users.find(u => u.name === myName);
-                if (myData) document.getElementById('userPts').innerText = myData.points;
+                
+                const me = data.find(x => x.name === myName);
+                if(me) document.getElementById('uPts').innerText = me.points;
             }
         }
 
-        // نظام الفحص وزيادة النقاط بالسيرفر
-        async function scanAndEarn() {
+        async function earn() {
             const btn = document.getElementById('scanBtn');
-            const bar = document.getElementById('pBar');
-            
             btn.disabled = true;
-            btn.innerText = "جاري التحليل الذكي...";
-            bar.style.width = "100%";
+            document.getElementById('pBar').style.width = "100%";
             
             setTimeout(async () => {
-                const { data } = await _supabase.from('users').select('points').eq('name', myName).single();
-                const newPts = (data.points || 0) + 25;
-                
-                await _supabase.from('users').update({ points: newPts }).eq('name', myName);
-                
-                bar.style.width = "0%";
+                const { data } = await _db.from('users').select('points').eq('name', myName).single();
+                await _db.from('users').update({ points: (data.points || 0) + 25 }).eq('name', myName);
+                document.getElementById('pBar').style.width = "0%";
                 btn.disabled = false;
-                btn.innerText = "📸 تصوير وفحص النفايات (+25 نقطة)";
-                syncData();
+                sync();
             }, 1500);
         }
 
-        function logout() {
-            localStorage.removeItem('r_name');
-            location.reload();
-        }
-
-        // فحص الجلسة عند فتح الصفحة
-        if (myName) startApp();
+        function logout() { localStorage.clear(); location.reload(); }
+        if(myName) start();
     </script>
 </body>
 </html>
