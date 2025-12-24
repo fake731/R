@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة رعد يوسف هديب البيئية</title>
+    <title> رعد يوسف هديب </title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,6 +12,16 @@
             --bg: #f5f5f7;
             --card: #ffffff;
             --text: #1d1d1f;
+            --input-bg: #f9f9f9;
+            --border: #ddd;
+        }
+
+        body.dark-mode {
+            --bg: #1c1c1e;
+            --card: #2c2c2e;
+            --text: #ffffff;
+            --input-bg: #3a3a3c;
+            --border: #48484a;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -19,24 +29,31 @@
         body {
             font-family: 'Tajawal', 'Plus Jakarta Sans', sans-serif;
             margin: 0; background: var(--bg); color: var(--text);
-            transition: background 0.5s;
+            transition: background 0.4s, color 0.4s;
         }
 
-        /* شاشة الدخول السلسة */
+        .top-bar {
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;
+        }
+
+        .theme-toggle {
+            background: var(--card); border: 1px solid var(--border);
+            padding: 8px 12px; border-radius: 10px; cursor: pointer;
+            font-size: 1.2rem; display: flex; align-items: center;
+        }
+
         #auth-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--card); z-index: 1000;
+            background: var(--bg); z-index: 1000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
 
         .auth-content { width: 90%; max-width: 400px; text-align: center; animation: fadeIn 0.8s ease; }
 
         input {
-            width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #ddd;
-            font-size: 1rem; margin-bottom: 20px; outline: none; background: #f9f9f9;
+            width: 100%; padding: 16px; border-radius: 12px; border: 1px solid var(--border);
+            font-size: 1rem; margin-bottom: 20px; outline: none; background: var(--input-bg); color: var(--text);
         }
-
-        input:focus { border-color: var(--accent); background: #fff; }
 
         .btn {
             width: 100%; padding: 16px; border-radius: 12px; border: none;
@@ -44,24 +61,20 @@
             font-size: 1.1rem; cursor: pointer; transition: 0.3s;
         }
 
-        .btn:active { transform: scale(0.98); }
-
-        /* المنصة الرئيسية */
-        #main-app { display: none; padding: 20px; max-width: 600px; margin: 0 auto; animation: slideIn 0.5s ease; }
+        #main-app { display: none; padding: 20px; max-width: 600px; margin: 0 auto; }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .owner-tag { font-size: 0.8rem; font-weight: bold; color: var(--accent); letter-spacing: 1px; }
 
         .stat-card {
             background: var(--card); padding: 24px; border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 20px;
         }
 
         .points-text { font-size: 2.5rem; font-weight: 900; color: var(--accent); }
 
-        /* فحص ذكي وسريع */
         .scan-btn {
-            background: #e1f0ff; color: var(--accent); border: 2px dashed var(--accent);
+            background: rgba(0, 122, 255, 0.1); color: var(--accent); border: 2px dashed var(--accent);
             padding: 40px 20px; border-radius: 20px; text-align: center; cursor: pointer;
             margin: 20px 0; font-weight: bold; position: relative; overflow: hidden;
         }
@@ -71,28 +84,29 @@
             width: 0%; transition: width 0.1s;
         }
 
-        /* لوحة الأبطال */
-        .leaderboard { background: #fff; border-radius: 20px; padding: 20px; margin-top: 30px; }
+        .leaderboard { background: var(--card); border-radius: 20px; padding: 20px; margin-top: 30px; }
         .hero-item {
             display: flex; justify-content: space-between; padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0; font-weight: bold;
+            border-bottom: 1px solid var(--border); font-weight: bold;
         }
-        .hero-item span:first-child { color: var(--success); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
+    <div class="top-bar">
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+        <div id="google_translate_element"></div>
+    </div>
+
     <div id="auth-screen">
         <div class="auth-content">
-            <div class="owner-tag">BY RAAD Y. HUDAIB</div>
-            <h1 style="margin: 10px 0 30px;">شو اسمك يا بطل؟</h1>
+            <div class="owner-tag">رعد يوسف هديب</div>
+            <h1 style="margin: 10px 0 30px;">الاسم</h1>
             <input type="text" id="nameInput" placeholder="اكتب اسمك هنا...">
-            <button class="btn" onclick="login()">دخول للمنصة</button>
+            <button class="btn" onclick="login()">تفضل</button>
         </div>
     </div>
 
@@ -114,8 +128,7 @@
 
         <div class="stat-card">
             <h3 id="instrTitle">مهمة اليوم: فرز البلاستيك</h3>
-            <p style="color:#666; font-size:0.9rem;">صور النفايات المفرزة بوضوح للفحص السريع.</p>
-            
+            <p style="opacity: 0.7; font-size:0.9rem;">صور النفايات المفرزة.</p>
             <div class="scan-btn" onclick="document.getElementById('fileInput').click()">
                 <span id="scanLabel">📸 اضغط للتصوير والفحص</span>
                 <div class="progress-bar" id="pBar"></div>
@@ -125,20 +138,38 @@
         </div>
 
         <div class="leaderboard">
-            <h3 style="margin-top:0">🏆 لوحة أبطال البيئة (+100 نقطة)</h3>
-            <div id="heroList">
-                <p style="color:#999; font-size:0.8rem;">بانتظار أول بطل...</p>
-            </div>
+            <h3 style="margin-top:0">حافظين على البيئة:</h3>
+            <div id="heroList"><p style="opacity: 0.5; font-size:0.8rem;">اول شخص : </p></div>
         </div>
 
-        <footer style="text-align:center; padding:40px; color:#999; font-size:0.8rem;">
-            © جميع الحقوق محفوظة لـ رعد يوسف هديب
+        <footer style="text-align:center; padding:40px; opacity: 0.5; font-size:0.8rem;">
+          © رعد يوسف هديب
         </footer>
     </div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'ar', includedLanguages: 'ar,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
         let currentUser = localStorage.getItem('eco_user') || "";
         let userPoints = parseInt(localStorage.getItem('eco_pts')) || 0;
+        let isDark = localStorage.getItem('theme') === 'dark';
+
+        if(isDark) {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeBtn').innerText = "☀️";
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const dark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('theme', dark ? 'dark' : 'light');
+            document.getElementById('themeBtn').innerText = dark ? "☀️" : "🌙";
+        }
 
         window.onload = () => { if(currentUser) showApp(); };
 
@@ -161,50 +192,34 @@
         function startQuickScan(event) {
             const file = event.target.files[0];
             if(!file) return;
-
             const label = document.getElementById('scanLabel');
             const pBar = document.getElementById('pBar');
-            const msg = document.getElementById('msg');
-
-            label.innerText = "جاري الفحص السريع...";
+            label.innerText = "جاري الفحص...";
             let progress = 0;
-            
-            // انيميشن سريع واحترافي
             const interval = setInterval(() => {
                 progress += 5;
                 pBar.style.width = progress + "%";
-                if(progress >= 100) {
-                    clearInterval(interval);
-                    completeScan();
-                }
+                if(progress >= 100) { clearInterval(interval); completeScan(); }
             }, 50);
         }
 
         function completeScan() {
             const label = document.getElementById('scanLabel');
             const msg = document.getElementById('msg');
-            
-            // الفحص الدقيق: بيعتمد على عشوائية ذكية مع فحص حجم الملف (محاكاة للدقة)
             const isSuccess = Math.random() > 0.3; 
-
             if(isSuccess) {
                 userPoints += 25;
                 localStorage.setItem('eco_pts', userPoints);
                 document.getElementById('userPoints').innerText = userPoints;
-                label.innerText = "✅ تم القبول! +25 نقطة";
+                label.innerText = "✅ تم القبول! +25";
                 msg.style.color = "var(--success)";
-                msg.innerText = "أحسنت! استمر للوصول للوحة الأبطال.";
-                
-                // إضافة للوحة الأبطال إذا وصل 100
-                if(userPoints >= 100) {
-                    addToLeaderboard(currentUser);
-                }
+                msg.innerText = "أحسنت! استمر للوصول للأبطال.";
+                if(userPoints >= 100) { addToLeaderboard(currentUser); }
             } else {
                 label.innerText = "❌ فشل الفحص";
-                msg.style.color = "red";
-                msg.innerText = "الصورة غير واضحة أو لا تحتوي على نفايات مفرزة.";
+                msg.style.color = "#ff453a";
+                msg.innerText = "الصورة غير واضحة.";
             }
-
             setTimeout(() => {
                 document.getElementById('pBar').style.width = "0%";
                 label.innerText = "📸 اضغط للتصوير والفحص";
@@ -224,11 +239,10 @@
             const list = document.getElementById('heroList');
             const heroes = JSON.parse(localStorage.getItem('eco_heroes') || '[]');
             if(heroes.length === 0) return;
-
             list.innerHTML = heroes.map(h => `
                 <div class="hero-item">
-                    <span>${h}</span>
-                    <span>بطل بيئي 🎖️</span>
+                    <span style="color:var(--success)">${h}</span>
+                    <span>بطل بيئي</span>
                 </div>
             `).join('');
         }
